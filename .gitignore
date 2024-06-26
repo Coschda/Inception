@@ -3,6 +3,5 @@ secrets/
 .env
 
 #Not done yet
-mariadb/
 wordpress/
 srcs/requirements/tools/
