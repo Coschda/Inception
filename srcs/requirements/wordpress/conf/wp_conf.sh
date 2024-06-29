@@ -1,14 +1,38 @@
 #!/bin/bash
 
-#sleep 10
+sleep 15
 if [ ! -f /var/www/wordpress/wp-config.php ]; then
-    wp config create	--allow-root \
-                        --path='/var/www/wordpress' \
-						--dbname="test" \
-						--dbuser="mdoumi" \
-						--dbpass="example" \
-						--dbhost=mariadb:3306
-    #wp core install     --allow-root \
-                        #--path='/var/www/wordpress'
+    cd "/var/www/wordpress"
+    wp config create    --allow-root \
+                        --dbname="$MYSQL_DATABASE" \
+                        --dbuser="$MYSQL_USER" \
+                        --dbpass="$MYSQL_PASSWORD" \
+                        --dbhost=mariadb:3306 \
+                        --path='/var/www/wordpress'
 fi
 
+/usr/sbin/php-fpm7.3 -F
+
+#if [ -f "$WP_PATH"/wp-config.php ];
+  #then
+    #echo "wordpress is already installed"
+  #else
+    #cd "$WP_PATH"
+    #wp core download --allow-root --locale=fr_FR
+    #wp core install --allow-root\
+                    #--path="$WP_PATH"\
+                    #--url="$WP_URL"\
+                    #--title="$WP_TITLE"\
+                    #--admin_user="$WP_ADMIN"\
+                    #--admin_password="$WP_ADMIN_PASSWORD"\
+                    #--admin_email="$WP_ADMIN_EMAIL"
+    #wp user create "$WP_USER" "$WP_USER_MAIL"\
+                    #--allow-root\
+                    #--path="$WP_PATH"\
+                    #--user_pass="$WP_USER_PASSWORD"\
+                    #--display_name="$WP_DISPLAY_NAME"\
+                    #--role="author"
+#fi
+
+#echo "running php-fpm"
+#/usr/sbin/php-fpm7.3 -F

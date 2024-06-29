@@ -6,23 +6,22 @@
 #    By: mdoumi <mdoumi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/06 11:53:54 by mdoumi            #+#    #+#              #
-#    Updated: 2024/06/28 11:30:57 by mdoumi           ###   ########.fr        #
+#    Updated: 2024/06/29 11:03:13 by mdoumi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = wordpress
 
-all: build run
+all:
+	mkdir -p /home/mdoumi/data/mariadb
+	mkdir -p /home/mdoumi/data/wordpress
+	docker compose -f ./srcs/docker-compose.yml up -d --build
 
-build:
-	docker build -t $(NAME) srcs/requirements/$(NAME)
+down:
+	docker compose -f ./srcs/docker-compose.yml down
 
-run:
-	docker run -it $(NAME)
-#	docker run -p 8080:443 -it $(NAME)
-
-clean:
-
-fclean: clean
-
-re: fclean all
+fclean: down
+	rm -rf /home/mdoumi/data/mariadb
+	rm -rf /home/mdoumi/data/wordpress
+	docker system prune -f
+	docker image prune -af
+	docker volume rm srcs_wordpress srcs_mariadb
