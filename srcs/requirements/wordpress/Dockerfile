@@ -19,4 +19,6 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 COPY conf/wp_conf.sh /usr/local/bin/wp_conf.sh
 RUN chmod +x /usr/local/bin/wp_conf.sh
 
+RUN mkdir -p /run/php
+
 ENTRYPOINT ./usr/local/bin/wp_conf.sh
