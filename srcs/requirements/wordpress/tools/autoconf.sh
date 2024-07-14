@@ -1,7 +1,10 @@
+echo "waiting for mariadb"
 sleep 15
 
 if [ -f "$WP_PATH"/wp-config.php ];
   then
+    echo "wordpress is already installed"
+  else
     cd "$WP_PATH"
     wp core download --allow-root --locale=fr_FR
     wp config create --allow-root\
@@ -25,4 +28,5 @@ if [ -f "$WP_PATH"/wp-config.php ];
                     --role="author"
 fi
 
+echo "running php-fpm"
 /usr/sbin/php-fpm7.3 -F
