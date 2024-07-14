@@ -10,7 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-
 all:
 	mkdir -p /home/mdoumi/data/mariadb
 	mkdir -p /home/mdoumi/data/wordpress
