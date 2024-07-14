@@ -15,11 +15,10 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
-COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+RUN sed -i "s|listen = /run/php/php7.3-fpm.sock|listen = 9000|g" /etc/php/7.3/fpm/pool.d/www.conf
 
-COPY conf/wp_conf.sh /usr/local/bin/wp_conf.sh
-RUN chmod +x /usr/local/bin/wp_conf.sh
+COPY tools/autoconf.sh /autoconf.sh
 
 RUN mkdir -p /run/php
 
-ENTRYPOINT ["bash", "/usr/local/bin/wp_conf.sh"]
+ENTRYPOINT ["bash", "autoconf.sh"]
