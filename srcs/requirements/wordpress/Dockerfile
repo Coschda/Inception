@@ -15,8 +15,8 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-COPY tools/autoconf.sh /autoconf.sh
+COPY conf/wp_conf.sh /usr/local/bin/wp_conf.sh
 
 RUN mkdir -p /run/php
 
-ENTRYPOINT ["bash", "autoconf.sh"]
+ENTRYPOINT ["bash", "/usr/local/bin/wp_conf.sh"]

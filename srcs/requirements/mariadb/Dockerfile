@@ -1,13 +1,14 @@
 FROM debian:buster
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install mariadb-server mariadb-client -y && \
+    mkdir -p /var/run/mysqld && \
+    chown -R mysql:mysql /var/run/mysqld && \
+    chown -R mysql:mysql /etc/mysql/ && \
+    chown -R mysql:mysql /var/lib/mysql
 
-RUN apt update -y
-RUN apt upgrade -y
+COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
+COPY tools/launch.sh /launch.sh
+RUN chmod 777 launch.sh
 
-RUN apt install mariadb-server -y
-
-COPY conf/mariadb.conf	/etc/mysql/mariadb.conf.d/50-server.cnf
-
-COPY conf/sql_script.sh /usr/local/bin/sql_script.sh
-RUN chmod 755 /usr/local/bin/sql_script.sh
-
-ENTRYPOINT ["bash", "/usr/local/bin/sql_script.sh"]
+ENTRYPOINT ["bash",  "/launch.sh"]
